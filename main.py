@@ -2,59 +2,46 @@ import random
 from enum import Enum
 import time
 
-class RPS(Enum):
-    ROCK = 0
-    PAPER = 1
-    SCISSORS = 2
-
 #main method
 def main():
     print("enter your action then the bot will respond")
     playerMove = getInput() 
     botMove  = botsMove()
-
-def validInput(input):
-    return{ #0, 1, 2
-        "rock": RPS.ROCK,
-        "paper": RPS.PAPER,
-        "scissors": RPS.SCISSORS
-    }.get(input, "invalid")
-
+    compareMoves(playerMove,botMove)
 # this gets user input
 def getInput():
-    # user input
     print("ROCK (R) | PAPER (P) | SCISSORS (S)")
 
     #Getting valid Input for the user
-    userInput = input("Enter your input here").lower()
-    
-    if validInput(userInput) == "invalid":
-        print("shit.")
+    userInput = input("Enter your input here: ")
 
-    
-            
-    if userInput != "ROCK" or userInput != "PAPER" or userInput != "SCISSORS":
-        print("please enter a valid input")
+    if userInput != "ROCK" and userInput != "PAPER" and userInput != "SCISSORS":
+        print(f"{userInput} is not a valid input")
     else:
         return userInput    
 
+# bots move
 def botsMove():
-    botChoice = random.randint(1, 3)
+    botChoice = random.randint(0, 2)
     match botChoice:
-        case 1:
+        case 0:
             botChoice = "ROCK"
-        case 2:
+        case 1:
             botChoice = "PAPER"
-        case 3:
+        case 2:
             botChoice = "SCISSORS"
+            
     return botChoice
     
-def compareMoves(playerMove, botMove):
+def compareMoves(playerMove, botMove): #string, int
     winner = ""
     #   rock > scissors
     #   scissors > paper
     #   paper > rock
-    if playerMove == "ROCK" and botMove != "PAPER":
+    #   hi im jack and im a little monkey ooo oo ahha haaa
+    #   
+
+    if playerMove ==  "ROCK" and botMove != "PAPER":
         winner = "Player wins"
     elif playerMove == "PAPER" and botMove != "SCISSORS":
         winner = "Player wins"
@@ -69,6 +56,7 @@ def compareMoves(playerMove, botMove):
     print("2..")
     time.sleep(1)
     print("1..")
+    time.sleep(1)
     print(f"bot chose {botMove} you chose {playerMove} the result is {winner}")
 
     
