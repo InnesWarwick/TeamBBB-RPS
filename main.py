@@ -56,7 +56,8 @@ def compareMoves(playerMove, botMove): #string, int
     print("2..")
     time.sleep(1)
     print("1..")
-    time.sleep(1)
+    time.sleep(1
+    )
     print(f"bot chose {botMove} you chose {playerMove} the result is {winner}")
 
     
