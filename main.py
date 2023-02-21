@@ -20,7 +20,7 @@ def getInput():
     #Getting valid Input for the user
     userInput = input("Enter your input here").lower()
 
-    if userInput == "rock" or "scissors" or 
+    if userInput == "rock" or "paper" or "scissors":
 
 
     
