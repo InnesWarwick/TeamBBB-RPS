@@ -11,13 +11,13 @@ def main(playerMove):
 # this gets user input
 def getInput(ch,evt):
     print("input ran")
-    if ch == 1:
+    if ch ==5:
         playerMove = "ROCK"
-    elif ch == 2:
+    elif ch == 6:
         playerMove = "PAPER"
-    elif ch == 3:
+    elif ch == 7:
         playerMove = "SCISSORS"
-    elif ch == 4:
+    elif ch == 8:
         print("ch 4 ran")
         sys.exit()
     main(playerMove)  
