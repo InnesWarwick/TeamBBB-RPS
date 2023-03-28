@@ -1,51 +1,55 @@
+
 import random
-from enum import Enum
 import time
-
+import explorerhat
+import sys
+from smbus import SMBus
+import time
 #main method
-def main():
-    print("enter your action then the bot will respond")
-    playerMove = getInput() 
-    botMove  = botsMove()
-    compareMoves(playerMove,botMove)
+def main(playerMove):
+
+    print("enter your action then the bot will respond") 
+    botMove,botMoveByte  = botsMove()
+    compareMoves(playerMove,botMove,botMoveByte)
 # this gets user input
-def getInput():
-    print("ROCK (R) | PAPER (P) | SCISSORS (S)")
-
-    #Getting valid Input for the user
-    userInput = input("Enter your input here: ")
-
-    if userInput != "ROCK" and userInput != "PAPER" and userInput != "SCISSORS":
-        print(f"{userInput} is not a valid input")
-    else:
-        return userInput    
+def getInput(ch,evt):
+    print("input ran")
+    if ch == 5:
+        playerMove = "ROCK"
+    elif ch == 6:
+        playerMove = "PAPER"
+    elif ch == 7:
+        playerMove = "SCISSORS"
+    elif ch == 4:
+        print("ch 4 ran")
+        sys.exit()
+    main(playerMove)  
 
 # bots move
 def botsMove():
-    botChoice = random.randint(0, 2)
-    match botChoice:
-        case 0:
-            botChoice = "ROCK"
-        case 1:
-            botChoice = "PAPER"
-        case 2:
-            botChoice = "SCISSORS"
+    botChoiceByte = random.randint(0, 2)
+    if botChoiceByte == 0:
+        botChoice = "ROCK"
+    elif botChoiceByte == 1:
+        botChoice = "PAPER"
+    elif botChoiceByte == 2:
+        botChoice = "SCISSORS"
             
-    return botChoice
+    return botChoice,botChoiceByte
     
-def compareMoves(playerMove, botMove): #string, int
+def compareMoves(playerMove, botMove, botMovesByte): #string, int
+    i2cbus = SMBus(1)
+    i2caddress = 0x14
     winner = ""
     #   rock > scissors
     #   scissors > paper
     #   paper > rock
     #   hi im jack and im a little monkey ooo oo ahha haaa
-    #   
-
-    if playerMove ==  "ROCK" and botMove != "PAPER":
+    if playerMove ==  "ROCK" and botMove != "PAPER" and botMove != "ROCK":
         winner = "Player wins"
-    elif playerMove == "PAPER" and botMove != "SCISSORS":
+    elif playerMove == "PAPER" and botMove != "SCISSORS" and botMove != "PAPER":
         winner = "Player wins"
-    elif playerMove == "SCISSORS" and botMove != "ROCK":
+    elif playerMove == "SCISSORS" and botMove != "ROCK" and botMove != "SCISSORS":
         winner = "Player wins"
     elif playerMove == botMove:
         winner = "A draw"
@@ -56,12 +60,10 @@ def compareMoves(playerMove, botMove): #string, int
     print("2..")
     time.sleep(1)
     print("1..")
-    time.sleep(1
-    )
+    time.sleep(1)
     print(f"bot chose {botMove} you chose {playerMove} the result is {winner}")
-
-    
-
-    
+    i2cbus.write_byte(i2caddress,botMovesByte)
 if __name__ == "__main__":
-    main()
+    print("1 = ROCK 2 = PAPER 3 = SCISSORS")
+    while True:
+        explorerhat.touch.pressed(getInput)
