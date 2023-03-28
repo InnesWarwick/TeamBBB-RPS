@@ -1,4 +1,3 @@
-
 import random
 import time
 import explorerhat
@@ -27,12 +26,12 @@ def getInput(ch,evt):
 
 # bots move
 def botsMove():
-    botChoiceByte = random.randint(0, 2)
-    if botChoiceByte == 0:
+    botChoiceByte = random.randint(1, 3)
+    if botChoiceByte == 1:
         botChoice = "ROCK"
-    elif botChoiceByte == 1:
-        botChoice = "PAPER"
     elif botChoiceByte == 2:
+        botChoice = "PAPER"
+    elif botChoiceByte == 3:
         botChoice = "SCISSORS"
             
     return botChoice,botChoiceByte
@@ -63,6 +62,8 @@ def compareMoves(playerMove, botMove, botMovesByte): #string, int
     time.sleep(1)
     print(f"bot chose {botMove} you chose {playerMove} the result is {winner}")
     i2cbus.write_byte(i2caddress,botMovesByte)
+    time.sleep(3)
+    i2cbus.write_byte(i2caddress,0)
 if __name__ == "__main__":
     print("1 = ROCK 2 = PAPER 3 = SCISSORS")
     while True:
